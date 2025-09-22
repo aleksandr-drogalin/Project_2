@@ -19,6 +19,10 @@ public class TaskOneTest extends BaseTest{
     private static final String CHECKED_ANNOTATION = "ExtendWith";
 
 
+    /**
+     * Тест проверяет, что на странице SoftAssertions есть заголовок примера кода для JUnit5
+     * а также проверяет наличие кода по характерной для JUnit5 аннотации
+     */
     @Test
     @DisplayName("Тест проверяет, что внутри страницы Soft assertions есть пример кода для JUnit5")
     public void checkExampleCode() {
