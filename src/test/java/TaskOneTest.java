@@ -26,9 +26,10 @@ public class TaskOneTest extends BaseTest{
     @Test
     @DisplayName("Тест проверяет, что внутри страницы Soft assertions есть пример кода для JUnit5")
     public void checkExampleCode() {
-       TaskOneWikiPage taskOneWikiPage = new TaskOneMainPage(BASE_URL).clickOnButtonWiki();
-       taskOneWikiPage.clickOnButtonMorePages();
-       TaskOneSoftAssertionsPage taskOneSoftAssertionsPage = taskOneWikiPage.clickOnButtonSoftAssertions();
+        TaskOneSoftAssertionsPage taskOneSoftAssertionsPage = new TaskOneMainPage(BASE_URL).clickOnButtonWiki()
+                .clickOnButtonMorePages()
+                .clickOnButtonSoftAssertions();
+
        String actualResult = taskOneSoftAssertionsPage.getLastTitleExample();
        Assertions.assertEquals(EXPECTED_TITLE, actualResult);
        Assertions.assertTrue(taskOneSoftAssertionsPage.isAnnotationJUnit5(CHECKED_ANNOTATION));

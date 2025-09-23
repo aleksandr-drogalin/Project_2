@@ -25,8 +25,7 @@ public class TaskTwoTest extends BaseTest {
     @Test
     @DisplayName("Тест проверяет, что квадрат А меняется местами с квадратом В")
     public void changeTwoSquare() {
-        TaskTwoMainPage taskTwoMainPage = new TaskTwoMainPage(BASE_URL);
-        taskTwoMainPage.changeSquare();
+        TaskTwoMainPage taskTwoMainPage = new TaskTwoMainPage(BASE_URL).changeSquare();
         Assertions.assertEquals(EXPECTED_TEXT_FIRST_SQUARE, taskTwoMainPage.getTextFirstSquare());
         Assertions.assertEquals(EXPECTED_TEXT_SECOND_SQUARE, taskTwoMainPage.getTextSecondSquare());
     }

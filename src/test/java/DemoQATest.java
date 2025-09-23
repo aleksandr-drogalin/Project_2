@@ -20,13 +20,23 @@ public class DemoQATest extends BaseTest{
     private static final String LAST_NAME = "Иванов";
     private static final String EMAIL = "ivanov@gmail.com";
     private static final String GENDER = "Male"; //еще валидно Female и Other
+    private static final String MOBILE = "9105552323";
+    private static final int YEAR_OF_BIRTH = 1995;
+    private static final String MONTH_OF_BIRTH = "August";
+    private static final int DAY_OF_BIRTH = 19;
+    private static final String SUBJECTS = "English";
+    private static final String[] HOBBIES = {"Sports", "Reading" , "Music"};
+
+//    private static final boolean HOBBIES_SPORTS = true;
+//    private static final boolean HOBBIES_READING = false;
+//    private static final boolean HOBBIES_MUSIC = true;
 
 
     //параметризация через метод
     private static Stream<Arguments> testData() {
         return Stream.of(
                 //валидные тестовые данные
-                Arguments.arguments(FIRST_NAME, LAST_NAME, EMAIL, GENDER)
+                Arguments.arguments(FIRST_NAME, LAST_NAME, EMAIL, GENDER, MOBILE, YEAR_OF_BIRTH, MONTH_OF_BIRTH, DAY_OF_BIRTH, SUBJECTS, HOBBIES)
         );
     }
 
@@ -34,15 +44,18 @@ public class DemoQATest extends BaseTest{
     @ParameterizedTest
     @DisplayName("Заполнение формы Practice Form")
     @MethodSource("testData")
-    public void setPracticeForm(String firstName, String lastName, String email, String gender) {
+    public void setPracticeForm(String firstName, String lastName, String email, String gender, String mobile, int yearOfBirth, String monthOfBirth, int dayOfBirth, String subjects, String[] hobbies) {
         pageLoadStrategy = PageLoadStrategy.EAGER.toString(); // стратегия загрузки страницы
         DemoQAPracticeFormPage demoQAPracticeFormPage = new DemoQAPracticeFormPage(BASE_URL);
-        demoQAPracticeFormPage.setFieldFirstName(firstName);
-        demoQAPracticeFormPage.setFieldLastName(lastName);
-        demoQAPracticeFormPage.setFieldEmail(email);
-        demoQAPracticeFormPage.setRadioGender(gender);
+        demoQAPracticeFormPage
+                .setFieldFirstName(firstName)
+                .setFieldLastName(lastName)
+                .setFieldEmail(email)
+                .setRadioGender(gender)
+                .setFieldMobile(mobile)
+                .setFieldDateOfBirth(yearOfBirth, monthOfBirth, dayOfBirth)
+                .setFieldSubjects(subjects)
+                .setCheckBoxHobbies(hobbies);
 
     }
-
-
 }

@@ -17,8 +17,9 @@ public class TaskOneWikiPage {
      * В списке Pages раскрываем список нажатием на кнопку Show 4 more pages...
      */
     @Step ("Нажать на кнопку Show 4 more pages")
-    public void clickOnButtonMorePages(){
+    public TaskOneWikiPage clickOnButtonMorePages(){
         buttonShow4MorePages.click();
+        return this;
     }
 
     /**

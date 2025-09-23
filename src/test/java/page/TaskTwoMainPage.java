@@ -25,9 +25,10 @@ public class TaskTwoMainPage {
      * Метод переносит квадрат А в цель: квадрат В
      */
     @Step ("Перенос Квадрата А в квадрат В")
-    public void changeSquare() {
+    public TaskTwoMainPage changeSquare() {
         actions().dragAndDrop(source, target).build().perform();
 //        source.dragAndDrop(DragAndDropOptions.to(target)); //тоже работает
+        return this;
     }
 
 
