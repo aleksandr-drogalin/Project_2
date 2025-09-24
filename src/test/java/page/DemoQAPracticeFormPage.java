@@ -4,6 +4,8 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
+import java.io.File;
+
 import static com.codeborne.selenide.Selenide.$x;
 
 public class DemoQAPracticeFormPage {
@@ -17,9 +19,16 @@ public class DemoQAPracticeFormPage {
     private final SelenideElement fieldEmail = $x("//input[@id='userEmail']"); //поле Email
     private final SelenideElement fieldMobile = $x("//input[@id = 'userNumber']"); //поле Mobile
     private final SelenideElement fieldDateOfBirth = $x("//input[@id='dateOfBirthInput']"); //поле Date Of Birth
-    private final SelenideElement fieldYearOfBirth= $x("//select[@class='react-datepicker__year-select']"); //поле Year Of Birth
-    private final SelenideElement fieldMonthOfBirth= $x("//select[@class='react-datepicker__month-select']"); //поле Month Of Birth
-    private final SelenideElement fieldSubjects= $x("//input[@id='subjectsInput']"); //поле Subjects
+    private final SelenideElement fieldYearOfBirth = $x("//select[@class='react-datepicker__year-select']"); //поле Year Of Birth
+    private final SelenideElement fieldMonthOfBirth = $x("//select[@class='react-datepicker__month-select']"); //поле Month Of Birth
+    private final SelenideElement fieldSubjects = $x("//input[@id='subjectsInput']"); //поле Subjects
+    private final SelenideElement buttonUploadPicture = $x("//input[@id='uploadPicture']"); //кнопка uploadPicture
+    private final SelenideElement fieldCurrentAddress = $x("//textarea[@id='currentAddress']"); //поле Current Address
+    private final SelenideElement fieldSelectState = $x("//div[@id='state']"); //поле Select State
+    private final SelenideElement fieldSelectCity = $x("//div[@id='city']"); //поле Select City
+    private final SelenideElement buttonSubmit = $x("//button[@id='submit']"); //кнопка Submit
+    private final SelenideElement titleThanksSubmittingForm = $x("//div[@id='example-modal-sizes-title-lg']"); //Заголовок успешно заполненной формы
+
 
     @Step ("Заполнение поля firstName")
     public DemoQAPracticeFormPage setFieldFirstName(String firstName) {
@@ -92,5 +101,43 @@ public class DemoQAPracticeFormPage {
         }
         return this;
     }
+
+    @Step ("Загрузка изображения")
+    public DemoQAPracticeFormPage uploadPicture(String pathToPicture) {
+        buttonUploadPicture.scrollTo().uploadFile(new File(pathToPicture));
+        return this;
+    }
+
+    @Step ("Заполнение поля Current Address")
+    public DemoQAPracticeFormPage setCurrentAddress(String currentAddress) {
+        fieldCurrentAddress.setValue(currentAddress);
+        return this;
+    }
+
+    @Step ("Заполнение поля Select State")
+    public DemoQAPracticeFormPage setFieldSelectState(int numberState) {
+        fieldSelectState.click();
+        $x("//div[@id='react-select-3-option-" + numberState +"']").click();
+        return this;
+    }
+
+    @Step ("Заполнение поля Select City")
+    public DemoQAPracticeFormPage setFieldSelectCity(int numberCity) {
+        fieldSelectCity.click();
+        $x("//div[@id='react-select-4-option-" + numberCity + "']");
+        return this;
+    }
+
+    @Step ("Клик на кнопку Submit")
+    public DemoQAPracticeFormPage clickOnButtonSubmit() {
+        buttonSubmit.scrollTo().click();
+        return this;
+    }
+
+    @Step ("Проверка появления уведомления об успешном заполнении формы")
+        public boolean isTitleSubmittingForm() {
+            return titleThanksSubmittingForm.isDisplayed();
+        }
+
 
 }
