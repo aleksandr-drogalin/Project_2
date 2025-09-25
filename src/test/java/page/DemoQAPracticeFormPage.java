@@ -3,10 +3,13 @@ package page;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import org.openqa.selenium.support.Color;
 
 import java.io.File;
 
+import static com.codeborne.selenide.Condition.cssValue;
 import static com.codeborne.selenide.Selenide.$x;
+import static org.assertj.core.error.ShouldHave.shouldHave;
 
 public class DemoQAPracticeFormPage {
     //конструктор класса
@@ -135,9 +138,42 @@ public class DemoQAPracticeFormPage {
     }
 
     @Step ("Проверка появления уведомления об успешном заполнении формы")
-        public boolean isTitleSubmittingForm() {
-            return titleThanksSubmittingForm.isDisplayed();
+    public boolean isTitleSubmittingForm() {
+        return titleThanksSubmittingForm.isDisplayed();
+    }
+
+    @Step ("Проверка цвета рамки поля при ошибке валидации")
+    public boolean errorBorderColor(String fieldName, String expectedColor) {
+        // Получаем фактический цвет в формате rgba
+        //String actualColor = fieldEmail.getCssValue("border-color");
+        String actualColor;
+        switch (fieldName){
+            case "Email" :
+                actualColor = fieldEmail.getCssValue("border-color");
+            break;
+            default: throw new IllegalArgumentException("Недопустимое название поля");
         }
+
+        // Конвертируем ожидаемый цвет в формат rgba, если он в формате #hex
+        String expectedRgbColor = Color.fromString(expectedColor).asRgb();
+
+        // Сравниваем цвета
+        return actualColor.equals(expectedRgbColor);
+    }
+
+    //
+    @Step ("Проверка появления иконки внутри поля при ошибке валидации")
+    public boolean errorLogoInField(String fieldName, String expectedURL) {
+        String actualURL;
+        switch (fieldName) {
+            case "Email" : actualURL = fieldEmail.getCssValue("background-image");
+            break;
+            default: throw new IllegalArgumentException("Недопустимое название поля");
+        }
+        return expectedURL.equals(actualURL);
+    }
+
+
 
 
 }
