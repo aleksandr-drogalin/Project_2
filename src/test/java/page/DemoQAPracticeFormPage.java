@@ -4,12 +4,8 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.support.Color;
-
 import java.io.File;
-
-import static com.codeborne.selenide.Condition.cssValue;
 import static com.codeborne.selenide.Selenide.$x;
-import static org.assertj.core.error.ShouldHave.shouldHave;
 
 public class DemoQAPracticeFormPage {
     //конструктор класса
@@ -31,7 +27,6 @@ public class DemoQAPracticeFormPage {
     private final SelenideElement fieldSelectCity = $x("//div[@id='city']"); //поле Select City
     private final SelenideElement buttonSubmit = $x("//button[@id='submit']"); //кнопка Submit
     private final SelenideElement titleThanksSubmittingForm = $x("//div[@id='example-modal-sizes-title-lg']"); //Заголовок успешно заполненной формы
-
 
     @Step ("Заполнение поля firstName")
     public DemoQAPracticeFormPage setFieldFirstName(String firstName) {
@@ -67,7 +62,7 @@ public class DemoQAPracticeFormPage {
             default:
                 throw new IllegalArgumentException("Пол должен быть либо Male, либо Female, в крайнем случае Other, хотя это не нормально!");
         }
-        //клик на нужном исходя из пола
+        //клик на нужном
         $x("//input[@id='gender-radio-" + genderNumber +"']/parent::div").click();
         return this;
     }
@@ -144,8 +139,7 @@ public class DemoQAPracticeFormPage {
 
     @Step ("Проверка цвета рамки поля при ошибке валидации")
     public boolean errorBorderColor(String fieldName, String expectedColor) {
-        // Получаем фактический цвет в формате rgba
-        //String actualColor = fieldEmail.getCssValue("border-color");
+        // Получаем цвет в формате rgb
         String actualColor;
         switch (fieldName){
             case "Email" :
@@ -172,8 +166,4 @@ public class DemoQAPracticeFormPage {
         }
         return expectedURL.equals(actualURL);
     }
-
-
-
-
 }
