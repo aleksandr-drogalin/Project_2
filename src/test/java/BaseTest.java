@@ -3,22 +3,33 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.selenide.AllureSelenide;
-import net.bytebuddy.build.Plugin;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.openqa.selenium.PageLoadStrategy;
 
-import static com.codeborne.selenide.Configuration.pageLoadStrategy;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
-abstract public class BaseTest {
 
-    public void setUp() {
+public abstract class BaseTest {
+
+    public Properties properties = new Properties();
+
+    public void setUp(){
         WebDriverManager.chromedriver().setup();
         Configuration.browser = "chrome";
         Configuration.browserSize = "1366x768";
         Configuration.timeout = 5000;
         Configuration.headless = false;
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+
+        try (InputStream input = new FileInputStream("src/test/resources/url.properties")) {
+            properties.load(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @BeforeEach

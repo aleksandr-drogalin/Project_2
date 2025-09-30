@@ -1,7 +1,9 @@
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import page.TaskTwoMainPage;
+
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static page.PageRepository.taskTwoMainPage;
 
 /**
  * Задание №2
@@ -13,7 +15,6 @@ import page.TaskTwoMainPage;
 
 public class TaskTwoTest extends BaseTest {
 
-    private static final String BASE_URL = "https://the-internet.herokuapp.com/drag_and_drop";
     private static final String EXPECTED_TEXT_FIRST_SQUARE = "B";
     private static final String EXPECTED_TEXT_SECOND_SQUARE = "A";
 
@@ -25,8 +26,12 @@ public class TaskTwoTest extends BaseTest {
     @Test
     @DisplayName("Тест проверяет, что квадрат А меняется местами с квадратом В")
     public void changeTwoSquare() {
-        TaskTwoMainPage taskTwoMainPage = new TaskTwoMainPage(BASE_URL).changeSquare();
-        Assertions.assertEquals(EXPECTED_TEXT_FIRST_SQUARE, taskTwoMainPage.getTextFirstSquare());
-        Assertions.assertEquals(EXPECTED_TEXT_SECOND_SQUARE, taskTwoMainPage.getTextSecondSquare());
+        taskTwoMainPage.open(properties.getProperty("taskTwo")).changeSquareAtoB();
+
+        String actualTextFirstSquare = taskTwoMainPage.getTextFirstSquare();
+        String actualTextSecondSquare = taskTwoMainPage.getTextSecondSquare();
+
+        assertThat(actualTextFirstSquare).isEqualTo(EXPECTED_TEXT_FIRST_SQUARE);
+        assertThat(actualTextSecondSquare).isEqualTo(EXPECTED_TEXT_SECOND_SQUARE);
     }
 }

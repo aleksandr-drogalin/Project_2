@@ -21,7 +21,6 @@ dependencies {
     testImplementation 'com.codeborne:selenide:7.9.4'
     testImplementation 'io.github.bonigarcia:webdrivermanager:6.2.0'
 
-    testImplementation 'org.aspectj:aspectjweaver:1.9.21'
     testImplementation 'io.qameta.allure:allure-junit5:2.12.1'
     testImplementation 'io.qameta.allure:allure-commandline:2.12.1'
     testImplementation 'io.qameta.allure:allure-rest-assured:2.12.1'
@@ -29,7 +28,8 @@ dependencies {
     testImplementation 'io.qameta.allure:allure-assertj:2.12.1'
     testImplementation 'io.qameta.allure:allure-selenide:2.12.1'
 
-    compileOnly 'org.projectlombok:lombok:1.18.30'
+    //compileOnly 'org.projectlombok:lombok:1.18.30'
+    testImplementation 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
 

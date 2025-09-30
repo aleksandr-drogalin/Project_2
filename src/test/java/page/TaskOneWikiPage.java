@@ -16,7 +16,7 @@ public class TaskOneWikiPage {
     /**
      * В списке Pages раскрываем список нажатием на кнопку Show 4 more pages...
      */
-    @Step ("Нажать на кнопку Show 4 more pages")
+    @Step("Нажать на кнопку Show 4 more pages")
     public TaskOneWikiPage clickOnButtonMorePages(){
         buttonShow4MorePages.click();
         return this;
@@ -26,7 +26,7 @@ public class TaskOneWikiPage {
      * Нажимаем на SoftAssertions
      * @return возвращает экземпляр страницы SoftAssertions
      */
-    @Step ("Нажать на кнопку SoftAssertions")
+    @Step("Нажать на кнопку SoftAssertions")
     public TaskOneSoftAssertionsPage clickOnButtonSoftAssertions() {
         buttonSoftAssertions.click();
         return new TaskOneSoftAssertionsPage();

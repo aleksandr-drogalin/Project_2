@@ -1,20 +1,18 @@
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.PageLoadStrategy;
-import page.DemoQAPracticeFormPage;
+import page.MonthOfBirth;
 
 import java.util.stream.Stream;
 
 import static com.codeborne.selenide.Configuration.pageLoadStrategy;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static page.PageRepository.demoQAPracticeFormPage;
 
 public class DemoQATest extends BaseTest {
-
-    private static final String BASE_URL = "https://demoqa.com/automation-practice-form";
 
     //валидные тестовые данные для полей
     private static final String FIRST_NAME = "Иван";
@@ -23,7 +21,7 @@ public class DemoQATest extends BaseTest {
     private static final String GENDER = "Male"; //еще валидно Female и Other
     private static final String MOBILE = "9105552323";
     private static final int YEAR_OF_BIRTH = 1995;
-    private static final String MONTH_OF_BIRTH = "August";
+    private static final String MONTH_OF_BIRTH = MonthOfBirth.JANUARY.getName();
     private static final int DAY_OF_BIRTH = 19;
     private static final String SUBJECTS = "English";
     private static final String[] HOBBIES = {"Sports", null , null}; //Еще валидно "Reading"  "Music"
@@ -38,8 +36,8 @@ public class DemoQATest extends BaseTest {
     //Валидные тестовые данные для поля Email, параметризация через метод
     private static Stream<Arguments> validTestData() {
         return Stream.of(
-                Arguments.arguments(FIRST_NAME, LAST_NAME, EMAIL, GENDER, MOBILE, YEAR_OF_BIRTH, MONTH_OF_BIRTH, DAY_OF_BIRTH, SUBJECTS, HOBBIES, PATH_TO_PICTURE, CURRENT_ADDRESS, NUMBER_STATE, NUMBER_CITY),
-                Arguments.arguments(FIRST_NAME, LAST_NAME, "ivanov1995@gmail.com", GENDER, MOBILE, YEAR_OF_BIRTH, MONTH_OF_BIRTH, DAY_OF_BIRTH, SUBJECTS, HOBBIES, PATH_TO_PICTURE, CURRENT_ADDRESS, NUMBER_STATE, NUMBER_CITY)
+               Arguments.arguments(FIRST_NAME, LAST_NAME, EMAIL, GENDER, MOBILE, YEAR_OF_BIRTH, MONTH_OF_BIRTH, DAY_OF_BIRTH, SUBJECTS, HOBBIES, PATH_TO_PICTURE, CURRENT_ADDRESS, NUMBER_STATE, NUMBER_CITY),
+               Arguments.arguments(FIRST_NAME, LAST_NAME, "ivanov1995@gmail.com", GENDER, MOBILE, YEAR_OF_BIRTH, MONTH_OF_BIRTH, DAY_OF_BIRTH, SUBJECTS, HOBBIES, PATH_TO_PICTURE, CURRENT_ADDRESS, NUMBER_STATE, NUMBER_CITY)
         );
     }
 
@@ -56,23 +54,27 @@ public class DemoQATest extends BaseTest {
     @DisplayName("Успешное заполнение поля Email формы Practice Form")
     @MethodSource("validTestData")
     public void setPracticeForm(String firstName, String lastName, String email, String gender, String mobile, int yearOfBirth, String monthOfBirth, int dayOfBirth, String subjects, String[] hobbies, String pathToPicture, String currentAddress, int numberState, int numberCity) {
-        pageLoadStrategy = PageLoadStrategy.EAGER.toString(); // стратегия загрузки страницы
-        DemoQAPracticeFormPage demoQAPracticeFormPage = new DemoQAPracticeFormPage(BASE_URL);
-        Assertions.assertTrue(demoQAPracticeFormPage
-                .setFieldFirstName(firstName)
-                .setFieldLastName(lastName)
-                .setFieldEmail(email)
+        pageLoadStrategy = PageLoadStrategy.EAGER.toString();
+
+        demoQAPracticeFormPage.open(properties.getProperty("demoQA"));
+        demoQAPracticeFormPage
+                .setInputFirstName(firstName)
+                .setInputLastName(lastName)
+                .setInputEmail(email)
                 .setRadioGender(gender)
-                .setFieldMobile(mobile)
+                .setInputMobile(mobile)
                 .setFieldDateOfBirth(yearOfBirth, monthOfBirth, dayOfBirth)
-                .setFieldSubjects(subjects)
+                .setInputSubjects(subjects)
                 .setCheckBoxHobbies(hobbies)
                 .uploadPicture(pathToPicture)
                 .setCurrentAddress(currentAddress)
-                .setFieldSelectState(numberState)
-                .setFieldSelectCity(numberCity)
-                .clickOnButtonSubmit()
-                .isTitleSubmittingForm());
+                .setInputState(numberState)
+                .setInputCity(numberCity)
+                .clickOnButtonSubmit();
+
+        boolean actualResultIsTitleSubmittingForm = demoQAPracticeFormPage.isTitleSubmittingForm();
+
+        assertThat(actualResultIsTitleSubmittingForm).isTrue();
     }
 
     //тестовый метод проверки ошибки валидации поля Email
@@ -81,25 +83,31 @@ public class DemoQATest extends BaseTest {
     @MethodSource("invalidTestData")
     public void checkErrorEmail(String firstName, String lastName, String email, String gender, String mobile, int yearOfBirth, String monthOfBirth, int dayOfBirth, String subjects, String[] hobbies, String pathToPicture, String currentAddress, int numberState, int numberCity) {
         pageLoadStrategy = PageLoadStrategy.EAGER.toString();
-        DemoQAPracticeFormPage demoQAPracticeFormPage = new DemoQAPracticeFormPage(BASE_URL);
+
+        demoQAPracticeFormPage.open(properties.getProperty("demoQA"));
         demoQAPracticeFormPage
-                .setFieldFirstName(firstName)
-                .setFieldLastName(lastName)
-                .setFieldEmail(email)
+                .setInputFirstName(firstName)
+                .setInputLastName(lastName)
+                .setInputEmail(email)
                 .setRadioGender(gender)
-                .setFieldMobile(mobile)
+                .setInputMobile(mobile)
                 .setFieldDateOfBirth(yearOfBirth, monthOfBirth, dayOfBirth)
-                .setFieldSubjects(subjects)
+                .setInputSubjects(subjects)
                 .setCheckBoxHobbies(hobbies)
                 .uploadPicture(pathToPicture)
                 .setCurrentAddress(currentAddress)
-                .setFieldSelectState(numberState)
-                .setFieldSelectCity(numberCity)
+                .setInputState(numberState)
+                .setInputCity(numberCity)
                 .clickOnButtonSubmit();
+
+        boolean actualResultIsTitleSubmittingForm = demoQAPracticeFormPage.isTitleSubmittingForm();
+        boolean actualResultIsErrorBorderColor = demoQAPracticeFormPage.errorBorderColor("Email", BORDER_COLOR_ERROR_FIELD_EMAIL);
+        boolean actualResultIsErrorLogoInField = demoQAPracticeFormPage.errorLogoInField("Email", URL_LOGO_ERROR_FIELD);
+
         assertAll(
-                () -> Assertions.assertFalse(demoQAPracticeFormPage.isTitleSubmittingForm()),
-                () -> Assertions.assertTrue(demoQAPracticeFormPage.errorBorderColor("Email", BORDER_COLOR_ERROR_FIELD_EMAIL)),
-                () -> Assertions.assertTrue(demoQAPracticeFormPage.errorLogoInField("Email", URL_LOGO_ERROR_FIELD))
+                () -> assertThat(actualResultIsTitleSubmittingForm).isFalse(),
+                () -> assertThat(actualResultIsErrorBorderColor).isTrue(),
+                () -> assertThat(actualResultIsErrorLogoInField).isTrue()
         );
     }
 }

@@ -11,8 +11,9 @@ import static com.codeborne.selenide.Selenide.$x;
  */
 public class TaskOneMainPage {
 
-    public TaskOneMainPage(String baseURL) {
-        Selenide.open(baseURL);
+    public TaskOneMainPage open(String url) {
+        Selenide.open(url);
+        return this;
     }
 
     private final SelenideElement buttonWiki = $x(".//a[@id='wiki-tab']/parent::li"); //кнопка (элемент списка) Wiki

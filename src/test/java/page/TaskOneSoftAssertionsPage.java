@@ -14,7 +14,7 @@ public class TaskOneSoftAssertionsPage {
      * Метод получения заголовка из последнего примера использования Selenide
      * @return возвращает текст заголовка последнего элемента коллекции
      */
-    @Step ("Получить заголовок последнего примера")
+    @Step("Получить заголовок последнего примера")
     public String getLastTitleExample() {
         return exampleTitles.last().getText();
     }

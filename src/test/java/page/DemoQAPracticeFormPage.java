@@ -8,45 +8,48 @@ import java.io.File;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class DemoQAPracticeFormPage {
-    //конструктор класса
-    public DemoQAPracticeFormPage(String baseUrl) {
-        Selenide.open(baseUrl);
+
+//    public DemoQAPracticeFormPage(String baseUrl) {
+//        Selenide.open(baseUrl);
+//    }
+    public void open(String url) {
+        Selenide.open(url);
     }
 
-    private final SelenideElement fieldFirstName = $x("//input[@id='firstName']"); //поле firstName
-    private final SelenideElement fieldLastName = $x("//input[@id='lastName']"); //поле lastName
-    private final SelenideElement fieldEmail = $x("//input[@id='userEmail']"); //поле Email
-    private final SelenideElement fieldMobile = $x("//input[@id = 'userNumber']"); //поле Mobile
-    private final SelenideElement fieldDateOfBirth = $x("//input[@id='dateOfBirthInput']"); //поле Date Of Birth
-    private final SelenideElement fieldYearOfBirth = $x("//select[@class='react-datepicker__year-select']"); //поле Year Of Birth
-    private final SelenideElement fieldMonthOfBirth = $x("//select[@class='react-datepicker__month-select']"); //поле Month Of Birth
-    private final SelenideElement fieldSubjects = $x("//input[@id='subjectsInput']"); //поле Subjects
-    private final SelenideElement buttonUploadPicture = $x("//input[@id='uploadPicture']"); //кнопка uploadPicture
-    private final SelenideElement fieldCurrentAddress = $x("//textarea[@id='currentAddress']"); //поле Current Address
-    private final SelenideElement fieldSelectState = $x("//div[@id='state']"); //поле Select State
-    private final SelenideElement fieldSelectCity = $x("//div[@id='city']"); //поле Select City
-    private final SelenideElement buttonSubmit = $x("//button[@id='submit']"); //кнопка Submit
-    private final SelenideElement titleThanksSubmittingForm = $x("//div[@id='example-modal-sizes-title-lg']"); //Заголовок успешно заполненной формы
+    private final SelenideElement inputFirstName = $x("//input[@id='firstName']");
+    private final SelenideElement inputLastName = $x("//input[@id='lastName']");
+    private final SelenideElement inputEmail = $x("//input[@id='userEmail']");
+    private final SelenideElement inputMobile = $x("//input[@id = 'userNumber']");
+    private final SelenideElement inputDateOfBirth = $x("//input[@id='dateOfBirthInput']");
+    private final SelenideElement inputYearOfBirth = $x("//option[@value='1900']/parent::select");
+    private final SelenideElement inputMonthOfBirth = $x("//option[@value='0']/parent::select");
+    private final SelenideElement inputSubjects = $x("//input[@id='subjectsInput']");
+    private final SelenideElement buttonUploadPicture = $x("//input[@id='uploadPicture']");
+    private final SelenideElement inputCurrentAddress = $x("//textarea[@id='currentAddress']");
+    private final SelenideElement inputState = $x("//div[@id='state']");
+    private final SelenideElement inputCity = $x("//div[@id='city']");
+    private final SelenideElement buttonSubmit = $x("//button[@id='submit']");
+    private final SelenideElement titleThanksSubmittingForm = $x("//div[text()='Thanks for submitting the form']");
 
-    @Step ("Заполнение поля firstName")
-    public DemoQAPracticeFormPage setFieldFirstName(String firstName) {
-        fieldFirstName.setValue(firstName);
+    @Step("Заполнение поля firstName")
+    public DemoQAPracticeFormPage setInputFirstName(String firstName) {
+        inputFirstName.setValue(firstName);
         return this;
     }
 
-    @Step ("Заполнение поля lastName")
-    public DemoQAPracticeFormPage setFieldLastName(String lastName) {
-        fieldLastName.setValue(lastName);
+    @Step("Заполнение поля lastName")
+    public DemoQAPracticeFormPage setInputLastName(String lastName) {
+        inputLastName.setValue(lastName);
         return this;
     }
 
-    @Step ("Заполнение поля Email")
-    public DemoQAPracticeFormPage setFieldEmail(String email) {
-        fieldEmail.setValue(email);
+    @Step("Заполнение поля Email")
+    public DemoQAPracticeFormPage setInputEmail(String email) {
+        inputEmail.setValue(email);
         return this;
     }
 
-    @Step ("Выбор радиокнопки Gender")
+    @Step("Выбор радиокнопки Gender")
     public DemoQAPracticeFormPage setRadioGender(String gender) {
         int genderNumber;
         switch (gender) {
@@ -67,30 +70,30 @@ public class DemoQAPracticeFormPage {
         return this;
     }
 
-    @Step ("Заполнение поля Mobile")
-    public DemoQAPracticeFormPage setFieldMobile(String mobile) {
-        fieldMobile.setValue(mobile);
+    @Step("Заполнение поля Mobile")
+    public DemoQAPracticeFormPage setInputMobile(String mobile) {
+        inputMobile.setValue(mobile);
         return this;
     }
 
-    @Step ("Заполнение поля Date Of Birth")
+    @Step("Заполнение поля Date Of Birth")
     public DemoQAPracticeFormPage setFieldDateOfBirth(int year, String month, int day) {
-        fieldDateOfBirth.click();
-        fieldYearOfBirth.click();
+        inputDateOfBirth.click();
+        inputYearOfBirth.click();
         $x("//option[@value='" + year +"']").click(); //выбор года рождения
-        fieldMonthOfBirth.click();
+        inputMonthOfBirth.click();
         $x("//option[text()='" + month +"']").click(); //выбор месяца рождения
         $x("//div[text()='" + day +"']").click(); //выбор числа месяца
         return this;
     }
 
-    @Step ("Заполнение поля Subjects")
-    public DemoQAPracticeFormPage setFieldSubjects(String subjects) {
-        fieldSubjects.setValue(subjects).pressEnter();
+    @Step("Заполнение поля Subjects")
+    public DemoQAPracticeFormPage setInputSubjects(String subjects) {
+        inputSubjects.setValue(subjects).pressEnter();
         return this;
     }
 
-    @Step ("Заполнение чекбокса Hobbies")
+    @Step("Заполнение чекбокса Hobbies")
     public DemoQAPracticeFormPage setCheckBoxHobbies (String[] hobbies) {
         for (int i = 1; i <= hobbies.length ; i++) {
             if(hobbies[i-1] != null) {
@@ -100,50 +103,49 @@ public class DemoQAPracticeFormPage {
         return this;
     }
 
-    @Step ("Загрузка изображения")
+    @Step("Загрузка изображения")
     public DemoQAPracticeFormPage uploadPicture(String pathToPicture) {
         buttonUploadPicture.scrollTo().uploadFile(new File(pathToPicture));
         return this;
     }
 
-    @Step ("Заполнение поля Current Address")
+    @Step("Заполнение поля Current Address")
     public DemoQAPracticeFormPage setCurrentAddress(String currentAddress) {
-        fieldCurrentAddress.setValue(currentAddress);
+        inputCurrentAddress.setValue(currentAddress);
         return this;
     }
 
-    @Step ("Заполнение поля Select State")
-    public DemoQAPracticeFormPage setFieldSelectState(int numberState) {
-        fieldSelectState.click();
+    @Step("Заполнение поля Select State")
+    public DemoQAPracticeFormPage setInputState(int numberState) {
+        inputState.click();
         $x("//div[@id='react-select-3-option-" + numberState +"']").click();
         return this;
     }
 
-    @Step ("Заполнение поля Select City")
-    public DemoQAPracticeFormPage setFieldSelectCity(int numberCity) {
-        fieldSelectCity.click();
+    @Step("Заполнение поля Select City")
+    public DemoQAPracticeFormPage setInputCity(int numberCity) {
+        inputCity.click();
         $x("//div[@id='react-select-4-option-" + numberCity + "']");
         return this;
     }
 
-    @Step ("Клик на кнопку Submit")
-    public DemoQAPracticeFormPage clickOnButtonSubmit() {
+    @Step("Клик на кнопку Submit")
+    public void clickOnButtonSubmit() {
         buttonSubmit.scrollTo().click();
-        return this;
     }
 
-    @Step ("Проверка появления уведомления об успешном заполнении формы")
+    @Step("Проверка появления уведомления об успешном заполнении формы")
     public boolean isTitleSubmittingForm() {
         return titleThanksSubmittingForm.isDisplayed();
     }
 
-    @Step ("Проверка цвета рамки поля при ошибке валидации")
+    @Step("Проверка цвета рамки поля при ошибке валидации")
     public boolean errorBorderColor(String fieldName, String expectedColor) {
         // Получаем цвет в формате rgb
         String actualColor;
         switch (fieldName){
             case "Email" :
-                actualColor = fieldEmail.getCssValue("border-color");
+                actualColor = inputEmail.getCssValue("border-color");
             break;
             default: throw new IllegalArgumentException("Недопустимое название поля");
         }
@@ -156,11 +158,11 @@ public class DemoQAPracticeFormPage {
     }
 
     //
-    @Step ("Проверка появления иконки внутри поля при ошибке валидации")
+    @Step("Проверка появления иконки внутри поля при ошибке валидации")
     public boolean errorLogoInField(String fieldName, String expectedURL) {
         String actualURL;
         switch (fieldName) {
-            case "Email" : actualURL = fieldEmail.getCssValue("background-image");
+            case "Email" : actualURL = inputEmail.getCssValue("background-image");
             break;
             default: throw new IllegalArgumentException("Недопустимое название поля");
         }

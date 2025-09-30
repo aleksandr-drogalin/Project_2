@@ -1,9 +1,11 @@
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import page.TaskOneMainPage;
 import page.TaskOneSoftAssertionsPage;
-import page.TaskOneWikiPage;
+
+
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static page.PageRepository.taskOneMainPage;
 
 /**
  * Задание №1.
@@ -14,7 +16,6 @@ import page.TaskOneWikiPage;
  */
 public class TaskOneTest extends BaseTest{
 
-    private static final String BASE_URL = "https://github.com/selenide/selenide";
     private static final String EXPECTED_TITLE = "3. Using JUnit5 extend test class:";
     private static final String CHECKED_ANNOTATION = "ExtendWith";
 
@@ -26,12 +27,14 @@ public class TaskOneTest extends BaseTest{
     @Test
     @DisplayName("Тест проверяет, что внутри страницы Soft assertions есть пример кода для JUnit5")
     public void checkExampleCode() {
-        TaskOneSoftAssertionsPage taskOneSoftAssertionsPage = new TaskOneMainPage(BASE_URL).clickOnButtonWiki()
+        TaskOneSoftAssertionsPage taskOneSoftAssertionsPage = taskOneMainPage.open(properties.getProperty("taskOne")).clickOnButtonWiki()
                 .clickOnButtonMorePages()
                 .clickOnButtonSoftAssertions();
 
-       String actualResult = taskOneSoftAssertionsPage.getLastTitleExample();
-       Assertions.assertEquals(EXPECTED_TITLE, actualResult);
-       Assertions.assertTrue(taskOneSoftAssertionsPage.isAnnotationJUnit5(CHECKED_ANNOTATION));
+        String actualTitle = taskOneSoftAssertionsPage.getLastTitleExample();
+        boolean actualResultIsAnnotationJUnit5 = taskOneSoftAssertionsPage.isAnnotationJUnit5(CHECKED_ANNOTATION);
+
+        assertThat(actualTitle).isEqualTo(EXPECTED_TITLE);
+        assertThat(actualResultIsAnnotationJUnit5).isTrue();
     }
 }
