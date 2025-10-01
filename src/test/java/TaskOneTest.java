@@ -2,9 +2,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import page.TaskOneSoftAssertionsPage;
 
-
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static page.PageRepository.taskOneMainPage;
 
 /**
@@ -16,10 +16,6 @@ import static page.PageRepository.taskOneMainPage;
  */
 public class TaskOneTest extends BaseTest{
 
-    private static final String EXPECTED_TITLE = "3. Using JUnit5 extend test class:";
-    private static final String CHECKED_ANNOTATION = "ExtendWith";
-
-
     /**
      * Тест проверяет, что на странице SoftAssertions есть заголовок примера кода для JUnit5
      * а также проверяет наличие кода по характерной для JUnit5 аннотации
@@ -27,14 +23,16 @@ public class TaskOneTest extends BaseTest{
     @Test
     @DisplayName("Тест проверяет, что внутри страницы Soft assertions есть пример кода для JUnit5")
     public void checkExampleCode() {
-        TaskOneSoftAssertionsPage taskOneSoftAssertionsPage = taskOneMainPage.open(properties.getProperty("taskOne")).clickOnButtonWiki()
+        TaskOneSoftAssertionsPage taskOneSoftAssertionsPage = taskOneMainPage.open().clickOnButtonWiki()
                 .clickOnButtonMorePages()
                 .clickOnButtonSoftAssertions();
 
-        String actualTitle = taskOneSoftAssertionsPage.getLastTitleExample();
-        boolean actualResultIsAnnotationJUnit5 = taskOneSoftAssertionsPage.isAnnotationJUnit5(CHECKED_ANNOTATION);
+        boolean isTitleExapleJunit = taskOneSoftAssertionsPage.titleExampleJUnitIsDisplayed();
+        boolean isExamleCodeJUnit5 = taskOneSoftAssertionsPage.exampleCodeJUnit5IsDisplayed();
 
-        assertThat(actualTitle).isEqualTo(EXPECTED_TITLE);
-        assertThat(actualResultIsAnnotationJUnit5).isTrue();
+        assertAll(
+                () -> assertThat(isTitleExapleJunit).isTrue(),
+                () -> assertThat(isExamleCodeJUnit5).isTrue()
+        );
     }
 }

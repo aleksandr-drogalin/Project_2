@@ -9,11 +9,10 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class DemoQAPracticeFormPage {
 
-//    public DemoQAPracticeFormPage(String baseUrl) {
-//        Selenide.open(baseUrl);
-//    }
-    public void open(String url) {
-        Selenide.open(url);
+    String baseURL = BaseURLProvider.properties.getProperty("demoQA");
+
+    public void open() {
+        Selenide.open(baseURL);
     }
 
     private final SelenideElement inputFirstName = $x("//input[@id='firstName']");
@@ -30,6 +29,10 @@ public class DemoQAPracticeFormPage {
     private final SelenideElement inputCity = $x("//div[@id='city']");
     private final SelenideElement buttonSubmit = $x("//button[@id='submit']");
     private final SelenideElement titleThanksSubmittingForm = $x("//div[text()='Thanks for submitting the form']");
+    private final SelenideElement checkBoxHobbiesSport = $x("//input[@id='hobbies-checkbox-1']/parent::div");
+    private final SelenideElement checkBoxHobbiesReading = $x("//input[@id='hobbies-checkbox-2']/parent::div");
+    private final SelenideElement checkBoxHobbiesMusic = $x("//input[@id='hobbies-checkbox-3']/parent::div");
+
 
     @Step("Заполнение поля firstName")
     public DemoQAPracticeFormPage setInputFirstName(String firstName) {
@@ -63,7 +66,7 @@ public class DemoQAPracticeFormPage {
                 genderNumber = 3;
                 break;
             default:
-                throw new IllegalArgumentException("Пол должен быть либо Male, либо Female, в крайнем случае Other, хотя это не нормально!");
+                throw new IllegalArgumentException("Пол должен быть либо Male, либо Female, либо Other");
         }
         //клик на нужном
         $x("//input[@id='gender-radio-" + genderNumber +"']/parent::div").click();
@@ -80,10 +83,10 @@ public class DemoQAPracticeFormPage {
     public DemoQAPracticeFormPage setFieldDateOfBirth(int year, String month, int day) {
         inputDateOfBirth.click();
         inputYearOfBirth.click();
-        $x("//option[@value='" + year +"']").click(); //выбор года рождения
+        $x("//option[@value='" + year +"']").click();
         inputMonthOfBirth.click();
-        $x("//option[text()='" + month +"']").click(); //выбор месяца рождения
-        $x("//div[text()='" + day +"']").click(); //выбор числа месяца
+        $x("//option[text()='" + month +"']").click();
+        $x("//div[text()='" + day +"']").click();
         return this;
     }
 
@@ -93,13 +96,11 @@ public class DemoQAPracticeFormPage {
         return this;
     }
 
-    @Step("Заполнение чекбокса Hobbies")
-    public DemoQAPracticeFormPage setCheckBoxHobbies (String[] hobbies) {
-        for (int i = 1; i <= hobbies.length ; i++) {
-            if(hobbies[i-1] != null) {
-                $x("//input[@id='hobbies-checkbox-" + i + "']/parent::div").click();
-            }
-        }
+    @Step("Заполнение чек-боксов")
+    public DemoQAPracticeFormPage setCheckBoxHobbies () {
+        checkBoxHobbiesSport.click();
+        checkBoxHobbiesReading.click();
+        checkBoxHobbiesMusic.click();
         return this;
     }
 
@@ -140,32 +141,15 @@ public class DemoQAPracticeFormPage {
     }
 
     @Step("Проверка цвета рамки поля при ошибке валидации")
-    public boolean errorBorderColor(String fieldName, String expectedColor) {
-        // Получаем цвет в формате rgb
-        String actualColor;
-        switch (fieldName){
-            case "Email" :
-                actualColor = inputEmail.getCssValue("border-color");
-            break;
-            default: throw new IllegalArgumentException("Недопустимое название поля");
-        }
-
-        // Конвертируем ожидаемый цвет в формат rgba, если он в формате #hex
+    public boolean errorBorderColorInputEmail(String expectedColor) {
+        String actualRgbColor = inputEmail.getCssValue("border-color");
         String expectedRgbColor = Color.fromString(expectedColor).asRgb();
-
-        // Сравниваем цвета
-        return actualColor.equals(expectedRgbColor);
+        return actualRgbColor.equals(expectedRgbColor);
     }
 
-    //
     @Step("Проверка появления иконки внутри поля при ошибке валидации")
-    public boolean errorLogoInField(String fieldName, String expectedURL) {
-        String actualURL;
-        switch (fieldName) {
-            case "Email" : actualURL = inputEmail.getCssValue("background-image");
-            break;
-            default: throw new IllegalArgumentException("Недопустимое название поля");
-        }
+    public boolean errorLogoInFieldEmail(String expectedURL) {
+        String actualURL = inputEmail.getCssValue("background-image");
         return expectedURL.equals(actualURL);
     }
 }

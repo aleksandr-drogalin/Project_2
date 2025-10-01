@@ -11,8 +11,10 @@ import static com.codeborne.selenide.Selenide.$x;
  */
 public class TaskOneMainPage {
 
-    public TaskOneMainPage open(String url) {
-        Selenide.open(url);
+    String baseURL = BaseURLProvider.properties.getProperty("taskOne");
+
+    public TaskOneMainPage open() {
+        Selenide.open(baseURL);
         return this;
     }
 

@@ -20,7 +20,7 @@ public enum MonthOfBirth {
         this.name = name;
     }
 
-    public String getName() {
+    public String val() {
         return name;
     }
 }

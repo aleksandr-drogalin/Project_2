@@ -1,6 +1,5 @@
 package page;
 
-import com.codeborne.selenide.DragAndDropOptions;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
@@ -10,8 +9,10 @@ import static com.codeborne.selenide.Selenide.actions;
 
 public class TaskTwoMainPage {
 
-    public TaskTwoMainPage open(String url) {
-        Selenide.open(url);
+    String baseURL = BaseURLProvider.properties.getProperty("taskTwo");
+
+    public TaskTwoMainPage open() {
+        Selenide.open(baseURL);
         return this;
     }
 

@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static page.PageRepository.taskTwoMainPage;
 
 /**
@@ -26,12 +27,14 @@ public class TaskTwoTest extends BaseTest {
     @Test
     @DisplayName("Тест проверяет, что квадрат А меняется местами с квадратом В")
     public void changeTwoSquare() {
-        taskTwoMainPage.open(properties.getProperty("taskTwo")).changeSquareAtoB();
+        taskTwoMainPage.open().changeSquareAtoB();
 
         String actualTextFirstSquare = taskTwoMainPage.getTextFirstSquare();
         String actualTextSecondSquare = taskTwoMainPage.getTextSecondSquare();
 
-        assertThat(actualTextFirstSquare).isEqualTo(EXPECTED_TEXT_FIRST_SQUARE);
-        assertThat(actualTextSecondSquare).isEqualTo(EXPECTED_TEXT_SECOND_SQUARE);
+        assertAll(
+                () -> assertThat(actualTextFirstSquare).isEqualTo(EXPECTED_TEXT_FIRST_SQUARE),
+                () -> assertThat(actualTextSecondSquare).isEqualTo(EXPECTED_TEXT_SECOND_SQUARE)
+        );
     }
 }

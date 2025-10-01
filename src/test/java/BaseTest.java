@@ -15,8 +15,6 @@ import java.util.Properties;
 
 public abstract class BaseTest {
 
-    public Properties properties = new Properties();
-
     public void setUp(){
         WebDriverManager.chromedriver().setup();
         Configuration.browser = "chrome";
@@ -24,12 +22,6 @@ public abstract class BaseTest {
         Configuration.timeout = 5000;
         Configuration.headless = false;
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-
-        try (InputStream input = new FileInputStream("src/test/resources/url.properties")) {
-            properties.load(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @BeforeEach
