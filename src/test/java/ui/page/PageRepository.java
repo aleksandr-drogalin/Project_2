@@ -1,4 +1,4 @@
-package page;
+package ui.page;
 
 public class PageRepository {
     public static final DemoQAPracticeFormPage demoQAPracticeFormPage = new DemoQAPracticeFormPage();

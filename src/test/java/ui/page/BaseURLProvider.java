@@ -1,4 +1,4 @@
-package page;
+package ui.page;
 
 import java.io.FileInputStream;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package page;
+package ui.page;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
@@ -20,8 +20,11 @@ public class DemoQAPracticeFormPage {
     private final SelenideElement inputEmail = $x("//input[@id='userEmail']");
     private final SelenideElement inputMobile = $x("//input[@id = 'userNumber']");
     private final SelenideElement inputDateOfBirth = $x("//input[@id='dateOfBirthInput']");
+    private final SelenideElement inputDay15 = $x("//div[text()='15']");
     private final SelenideElement inputYearOfBirth = $x("//option[@value='1900']/parent::select");
+    private final SelenideElement inputYear1994 = $x("//option[@value='1994']");
     private final SelenideElement inputMonthOfBirth = $x("//option[@value='0']/parent::select");
+    private final SelenideElement inputMonthMay = $x("//option[text()='May']");
     private final SelenideElement inputSubjects = $x("//input[@id='subjectsInput']");
     private final SelenideElement buttonUploadPicture = $x("//input[@id='uploadPicture']");
     private final SelenideElement inputCurrentAddress = $x("//textarea[@id='currentAddress']");
@@ -55,7 +58,7 @@ public class DemoQAPracticeFormPage {
     @Step("Выбор радиокнопки Gender")
     public DemoQAPracticeFormPage setRadioGender(String gender) {
         int genderNumber;
-        switch (gender) {
+        switch (Gender.MALE.val()) {
             case "Male" :
                 genderNumber = 1;
                 break;
@@ -80,13 +83,13 @@ public class DemoQAPracticeFormPage {
     }
 
     @Step("Заполнение поля Date Of Birth")
-    public DemoQAPracticeFormPage setFieldDateOfBirth(int year, String month, int day) {
+    public DemoQAPracticeFormPage setDateOfBirth15May1994() {
         inputDateOfBirth.click();
         inputYearOfBirth.click();
-        $x("//option[@value='" + year +"']").click();
+        inputYear1994.click();
         inputMonthOfBirth.click();
-        $x("//option[text()='" + month +"']").click();
-        $x("//div[text()='" + day +"']").click();
+        inputMonthMay.click();
+        inputDay15.click();
         return this;
     }
 

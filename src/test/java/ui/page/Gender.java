@@ -1,4 +1,4 @@
-package page;
+package ui.page;
 
 public enum Gender {
 

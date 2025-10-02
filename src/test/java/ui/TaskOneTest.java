@@ -1,11 +1,13 @@
+package ui;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import page.TaskOneSoftAssertionsPage;
+import ui.page.TaskOneSoftAssertionsPage;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static page.PageRepository.taskOneMainPage;
+import static ui.page.PageRepository.taskOneMainPage;
 
 /**
  * Задание №1.
@@ -27,12 +29,9 @@ public class TaskOneTest extends BaseTest{
                 .clickOnButtonMorePages()
                 .clickOnButtonSoftAssertions();
 
-        boolean isTitleExapleJunit = taskOneSoftAssertionsPage.titleExampleJUnitIsDisplayed();
-        boolean isExamleCodeJUnit5 = taskOneSoftAssertionsPage.exampleCodeJUnit5IsDisplayed();
-
         assertAll(
-                () -> assertThat(isTitleExapleJunit).isTrue(),
-                () -> assertThat(isExamleCodeJUnit5).isTrue()
+                () -> assertThat(taskOneSoftAssertionsPage.titleExampleJUnitIsDisplayed()).isTrue(),
+                () -> assertThat(taskOneSoftAssertionsPage.exampleCodeJUnit5IsDisplayed()).isTrue()
         );
     }
 }
