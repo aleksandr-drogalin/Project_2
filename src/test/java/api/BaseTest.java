@@ -18,13 +18,12 @@ public abstract class BaseTest {
     public void setUp() {
         request = new Request();
 
-        CategoryNewPet category = new CategoryNewPet(StandartPetIntTestData.CATEGORY_ID.val(), StandartPetStringTestData.PET_CATEGORY_NAME.val());
-        List<String> photoUrls = new ArrayList<>();
-        photoUrls.add(StandartPetStringTestData.PET_PHOTO_URL.val());
-        TagsNewPet tag1 = new TagsNewPet(StandartPetIntTestData.TAGS_ID.val(), StandartPetStringTestData.PET_TAGS_NAME.val());
-        List<TagsNewPet> tags = new ArrayList<>();
-        tags.add(tag1);
-        standartPet = new NewPet(StandartPetIntTestData.PET_ID.val(), category, StandartPetStringTestData.PET_NAME.val(), photoUrls, tags, StandartPetStringTestData.PET_STATUS.val());
+        CategoryNewPet categoryStandartPet = new CategoryNewPet(StandartPetIntTestData.CATEGORY_ID.val(), StandartPetStringTestData.PET_CATEGORY_NAME.val());
+        List<String> photoUrlsStandartPet = new ArrayList<>(List.of(StandartPetStringTestData.PET_PHOTO_URL.val()));
+        TagsNewPet tag1StandartPet = new TagsNewPet(StandartPetIntTestData.TAGS_ID.val(), StandartPetStringTestData.PET_TAGS_NAME.val());
+        List<TagsNewPet> tagsStandartPetList = new ArrayList<>(List.of(tag1StandartPet));
+
+        standartPet = new NewPet(StandartPetIntTestData.PET_ID.val(), categoryStandartPet, StandartPetStringTestData.PET_NAME.val(), photoUrlsStandartPet, tagsStandartPetList, StandartPetStringTestData.PET_STATUS.val());
     }
 
     @AfterEach

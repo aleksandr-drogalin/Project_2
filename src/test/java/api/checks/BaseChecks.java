@@ -1,9 +1,9 @@
-package api.action;
+package api.checks;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 
-public class BaseAction {
+public class BaseChecks {
 
     @Step("Проверка кода ответа")
     public static void checkResponseCode(Response response, int expectedCode) {

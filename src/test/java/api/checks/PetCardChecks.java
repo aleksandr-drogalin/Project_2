@@ -1,4 +1,4 @@
-package api.action;
+package api.checks;
 
 import api.model.NewPet;
 import api.model.TagsNewPet;
@@ -10,9 +10,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class PetCardAction {
+public class PetCardChecks {
 
     @Step("Проверка, что в теле ответа содержится id питомца")
     public static void checkPetId(Response response, int expectedId) {

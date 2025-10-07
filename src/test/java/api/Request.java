@@ -23,7 +23,7 @@ public class Request {
     public Response getPet(int petId) {
         return given()
                 .baseUri(baseURI)
-                .get(ApiProvider.properties.getProperty("getPet"));
+                .get(ApiProvider.properties.getProperty("getPet")+petId);
     }
 
     @Step("Запрос на полное обновление данных питомца")
