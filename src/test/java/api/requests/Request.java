@@ -1,4 +1,4 @@
-package api;
+package api.requests;
 
 import api.model.NewPet;
 import io.qameta.allure.Step;
@@ -10,7 +10,7 @@ public class Request {
 
     String baseURI = ApiProvider.properties.getProperty("basePetStore");
 
-    @Step("Запрос на добавление нового питомца")
+    @Step("Запрос на добавление карточки нового питомца")
     public Response addNewPet(NewPet newPet) {
         return given()
                 .baseUri(baseURI)
@@ -19,14 +19,14 @@ public class Request {
                 .post(ApiProvider.properties.getProperty("endCreateNewPet"));
     }
 
-    @Step("Запрос на получение данных питомца по ID")
+    @Step("Запрос на получение карточки питомца по ID")
     public Response getPet(int petId) {
         return given()
                 .baseUri(baseURI)
                 .get(ApiProvider.properties.getProperty("getPet")+petId);
     }
 
-    @Step("Запрос на полное обновление данных питомца")
+    @Step("Запрос на полное обновление карточки питомца")
     public Response updatePet(NewPet newPet) {
         return given()
                 .baseUri(baseURI)
@@ -35,7 +35,7 @@ public class Request {
                 .put(ApiProvider.properties.getProperty("updatePet"));
     }
 
-    @Step("Запрос на удаление питомца")
+    @Step("Запрос на удаление карточки питомца")
     public Response deletePet(int petId) {
         return given()
                 .baseUri(baseURI)

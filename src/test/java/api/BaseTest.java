@@ -3,6 +3,9 @@ package api;
 import api.model.CategoryNewPet;
 import api.model.NewPet;
 import api.model.TagsNewPet;
+import api.requests.Request;
+import api.testdata.StandartPetIntTestData;
+import api.testdata.StandartPetStringTestData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 

@@ -2,6 +2,8 @@ package api;
 
 import api.checks.BaseChecks;
 import api.checks.PetCardChecks;
+import api.testdata.StandartPetIntTestData;
+import api.testdata.StandartPetStringTestData;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

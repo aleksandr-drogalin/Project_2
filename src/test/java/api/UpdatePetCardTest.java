@@ -5,6 +5,7 @@ import api.checks.PetCardChecks;
 import api.model.CategoryNewPet;
 import api.model.NewPet;
 import api.model.TagsNewPet;
+import api.testdata.StandartPetIntTestData;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
