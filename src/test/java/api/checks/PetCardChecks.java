@@ -13,34 +13,34 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class PetCardChecks {
 
-    @Step("Проверка, что в теле ответа содержится id питомца")
+    @Step("Проверка, что в теле ответа содержится id питомца {expectedId}")
     public static void checkPetId(Response response, int expectedId) {
         response.then().assertThat().body("id",equalTo(expectedId));
     }
 
-    @Step("Проверка, что в теле ответа содержится id категории")
+    @Step("Проверка, что в теле ответа содержится id категории {expectedId}")
     public static void checkCategoryId(Response response, int expectedId) {
         response.then().assertThat().body("category.id", equalTo(expectedId));
     }
 
-    @Step("Проверка, что в теле ответа содержится название категории")
+    @Step("Проверка, что в теле ответа содержится название категории {expectedName}")
     public static void checkCategoryName(Response response, String expectedName) {
         response.then().assertThat().body("category.name", equalTo(expectedName));
     }
 
-    @Step("Проверка, что в теле ответа содержится имя питомца")
+    @Step("Проверка, что в теле ответа содержится имя питомца {expectedName}")
     public static void checkPetName(Response response, String expectedName) {
         response.then().assertThat().body("name", equalTo(expectedName));
     }
 
-    @Step("Проверка, что в теле ответа возвращается список URL фото")
+    @Step("Проверка, что в теле ответа возвращается список URL фото {expectedURL}")
     public static void checkPhotoUrlsList(Response response, int checkIndexOfList, String expectedURL) {
         NewPet responsePet = response.body().as(NewPet.class);
         List<String> listUrl = responsePet.getPhotoUrls();
         assertThat(listUrl.get(checkIndexOfList)).isEqualTo(expectedURL);
     }
 
-    @Step("Проверка, что в теле ответа возвращается список тегов")
+    @Step("Проверка, что в теле ответа возвращается список тегов {expectedId}, {expectedName}")
     public static void checkTagsList(Response response, int checkedIndexOfList, int expectedId, String expectedName) {
         NewPet responsePet = response.body().as(NewPet.class);
         List<TagsNewPet> tagsResponsePetList = responsePet.getTags();
@@ -51,7 +51,7 @@ public class PetCardChecks {
         );
     }
 
-    @Step("Проверка, что в теле ответа возвращается статус")
+    @Step("Проверка, что в теле ответа возвращается статус {expectedStatus}")
     public static void checkPetStatus(Response response, String expectedStatus) {
         response.then().body("status", equalTo(expectedStatus));
     }

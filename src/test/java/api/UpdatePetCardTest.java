@@ -2,16 +2,13 @@ package api;
 
 import api.checks.BaseChecks;
 import api.checks.PetCardChecks;
-import api.model.CategoryNewPet;
 import api.model.NewPet;
-import api.model.TagsNewPet;
+import api.provider.PetProvider;
 import api.testdata.StandartPetIntTestData;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class UpdatePetCardTest extends BaseTest{
 
@@ -23,19 +20,14 @@ public class UpdatePetCardTest extends BaseTest{
     private final String TAGS_NAME_TEST_PET = "Test Cat";
     private final String STATUS_TEST_PET = "reserved";
 
-    private CategoryNewPet categoryTestPet = new CategoryNewPet(CATEGORY_ID_TEST_PET, CATEGORY_NAME_TEST_PET);
-    private List<String> photoUrlsPetList = new ArrayList<>(List.of(URL_PHOTO_TEST_PET));
-    private TagsNewPet tag1TestPet = new TagsNewPet(TAGS_ID_TEST_PET, TAGS_NAME_TEST_PET);
-    private List<TagsNewPet> tagsTestPetList = new ArrayList<>(List.of(tag1TestPet));
-
     @Test
     @DisplayName("Успешное обновление карточки питомца")
     public void successfulUpdatePetCard() {
 
         request.addNewPet(standartPet);
 
-        NewPet testPet = new NewPet(StandartPetIntTestData.PET_ID.val(), categoryTestPet,
-                PET_NAME_TEST_PET, photoUrlsPetList, tagsTestPetList,STATUS_TEST_PET);
+        NewPet testPet = PetProvider.createPet(StandartPetIntTestData.PET_ID.val(), CATEGORY_ID_TEST_PET, CATEGORY_NAME_TEST_PET, PET_NAME_TEST_PET,
+                URL_PHOTO_TEST_PET, TAGS_ID_TEST_PET, TAGS_NAME_TEST_PET, STATUS_TEST_PET);
 
         Response response = request.updatePet(testPet);
 
